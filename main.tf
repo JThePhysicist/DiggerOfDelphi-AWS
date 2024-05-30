@@ -67,6 +67,8 @@ resource "aws_lambda_function" "process_images" {
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.9"
   source_code_hash = filebase64sha256("lambda_function.zip")
+  timeout          = 300
+  memory_size      = 1024
 
   environment {
     variables = {
