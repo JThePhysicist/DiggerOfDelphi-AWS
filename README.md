@@ -19,6 +19,7 @@ docker run -it --rm \
   -e AWS_ACCESS_KEY_ID=(YOUR AWS ACCESS KEY) \
   -e AWS_SECRET_ACCESS_KEY=(YOUR AWS SECRET KEY) \
   -e AWS_DEFAULT_REGION=us-west-1 \
+  -e TF_VAR_google_api_key=(your google API key) \
   terraform-label-app
 
 Inside docker shell execute:
