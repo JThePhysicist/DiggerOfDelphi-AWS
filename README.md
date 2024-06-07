@@ -1,4 +1,4 @@
-# DiggerOfDelphi-AWS v 0.0.1
+# DiggerOfDelphi-AWS v 0.0.2
 
 
 Sets up labeling pipeline on AWS using Terraform. Uses Google Gemini Pro Vision at the moment
@@ -15,6 +15,7 @@ Then build using "docker build -t terraform-label-app ."
 Docker container can be run using 
 
 docker run -it --rm \
+  --entrypoint /bin/sh \
   -v $(pwd):/terraform \
   -e AWS_ACCESS_KEY_ID=(YOUR AWS ACCESS KEY) \
   -e AWS_SECRET_ACCESS_KEY=(YOUR AWS SECRET KEY) \
@@ -23,11 +24,11 @@ docker run -it --rm \
   terraform-label-app
 
 Inside docker shell execute:
-terraform init
-terraform plan
-terraform apply
+terraform init \
+terraform plan \
+terraform apply \
 
-To tear down infrastructure execute:
+To tear down infrastructure execute: \
 terraform destroy
 
 To use you'll need a google gemini api key. There is a free tier and you can sign up at https://ai.google.dev/
