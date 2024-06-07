@@ -1,3 +1,7 @@
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
 variable "google_api_key" {
   description = "Google API key for the Lambda function"
   type        = string
@@ -48,12 +52,28 @@ resource "aws_iam_role" "lambda_role" {
       Statement = [
         {
           Action = [
-            "s3:*",
-            "dynamodb:*",
-            "logs:*",
+            "s3:GetObject",
           ]
           Effect   = "Allow"
-          Resource = "*"
+          Resource = "arn:aws:s3:::photo-bucket-3df2er5tsd/*"
+        },
+        {
+          Action = [
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+          ]
+          Effect   = "Allow"
+          Resource = "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/ImageLabels"
+        },
+        {
+          Action = [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+          ]
+          Effect   = "Allow"
+          Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/ProcessImages:*"
         },
       ]
     })
